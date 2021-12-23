@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -9,38 +10,7 @@
 </head>
 
 <body class="stackedit">
-  <div class="stackedit__left">
-    <div class="stackedit__toc">
-      
-<ul>
-<li><a href="#pivoting">Pivoting</a></li>
-<li><a href="#determinant">Determinant</a></li>
-<li><a href="#cramer’s-rule">Cramer’s rule</a></li>
-<li><a href="#naive-gauss-elimination">Naive Gauss Elimination</a></li>
-<li><a href="#gauss-jordan-elimination">Gauss-Jordan Elimination</a></li>
-<li><a href="#lu-decomposition">LU DECOMPOSITION</a>
-<ul>
-<li><a href="#tìm-lu">Tìm LU</a></li>
-<li><a href="#dùng-lu-để-solve-a-times-x--b">Dùng LU để solve A×x=bA \times x = bA×x=b</a></li>
-</ul>
-</li>
-<li><a href="#invert-matrix">Invert Matrix</a>
-<ul>
-<li><a href="#định-nghĩa">Định nghĩa:</a></li>
-<li><a href="#cách-tìm-a---1">Cách tìm [A]−1[A] ^ {-1}[A]−1</a></li>
-<li><a href="#dùng-invert-matrix-để-tìm-nghiệma-times-x--b">Dùng invert matrix để tìm nghiệm:A×x=bA \times x = bA×x=b</a></li>
-</ul>
-</li>
-<li><a href="#gauss–seidel-method">Gauss–Seidel method</a></li>
-<li><a href="#successive-over-relaxation">Successive over-relaxation</a></li>
-</ul>
-
-    </div>
-  </div>
-  <div class="stackedit__right">
-    <div class="stackedit__html">
-      <pre><code># ![🐧](https://static.xx.fbcdn.net/images/emoji.php/v9/tcb/1/32/1f427.png)Scaling![🐧](https://static.xx.fbcdn.net/images/emoji.php/v9/tcb/1/32/1f427.png)
-</code></pre>
+  <div class="stackedit__html"><h1 id="scaling"><img src="https://static.xx.fbcdn.net/images/emoji.php/v9/tcb/1/32/1f427.png" alt="🐧">Scaling<img src="https://static.xx.fbcdn.net/images/emoji.php/v9/tcb/1/32/1f427.png" alt="🐧"></h1>
 <p><span class="katex--inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.1600em" columnalign="right right right right" columnlines="none none solid" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>11</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>12</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>13</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>b</mi><mn>1</mn></msub></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>21</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>22</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>23</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>b</mi><mn>2</mn></msub></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>31</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>32</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>a</mi><mn>33</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>b</mi><mn>3</mn></msub></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mo>=</mo><mo>&gt;</mo><mrow><mo fence="true">[</mo><mtable rowspacing="0.1600em" columnalign="right right right right" columnlines="none none solid" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>11</mn></msub><msub><mi>n</mi><mn>1</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>12</mn></msub><msub><mi>n</mi><mn>1</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>13</mn></msub><msub><mi>n</mi><mn>1</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>b</mi><mn>1</mn></msub><msub><mi>n</mi><mn>1</mn></msub></mfrac></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>21</mn></msub><msub><mi>n</mi><mn>2</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>22</mn></msub><msub><mi>n</mi><mn>2</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>23</mn></msub><msub><mi>n</mi><mn>2</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>b</mi><mn>2</mn></msub><msub><mi>n</mi><mn>2</mn></msub></mfrac></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>31</mn></msub><msub><mi>n</mi><mn>3</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>32</mn></msub><msub><mi>n</mi><mn>3</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>a</mi><mn>33</mn></msub><msub><mi>n</mi><mn>3</mn></msub></mfrac></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mfrac><msub><mi>b</mi><mn>3</mn></msub><msub><mi>n</mi><mn>3</mn></msub></mfrac></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">\left[\begin{array}{rrr|r}
 a_{11} &amp; a_{12} &amp; a_{13} &amp;  b_1\\
 a_{21} &amp; a_{22} &amp; a_{23} &amp;  b_2 \\
@@ -447,9 +417,7 @@ Sau khi pivot, <span class="katex--inline"><span class="katex"><span class="kate
 <strong><img src="https://lh4.googleusercontent.com/c4zW_egBEpEUAaXyCSqXkvDuzCd03gL93cJBvpM3qlOoGE41cFKtzzvTd5tquQ17eKkiMka0PuLt-cUDEEHb5EV7cGH5nE8ZpZvvSyNF8TUkgo6MR-juN5nGzPAvL8wvLmTu4SXc=s1600" alt=""></strong></p>
 <h1 id="successive-over-relaxation"><img src="https://static.xx.fbcdn.net/images/emoji.php/v9/tcb/1/32/1f427.png" alt="🐧">Successive over-relaxation<img src="https://static.xx.fbcdn.net/images/emoji.php/v9/tcb/1/32/1f427.png" alt="🐧"></h1>
 <p>Mấy bạn có thể tham khảo: <a href="https://atozmath.com/example/CONM/GaussEli.aspx?he=e&amp;q=SOR2">https://atozmath.com/example/CONM/GaussEli.aspx?he=e&amp;q=SOR2</a></p>
-
-    </div>
-  </div>
+</div>
 </body>
 
 </html>
